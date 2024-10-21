@@ -286,9 +286,10 @@ if not fetch_annotation:
 ```{python}
 chrY_genes = adata.var_names.intersection(annot.index[annot.chromosome_name == "Y"])
 chrY_genes
+chrX_genes = adata.var_names.intersection(annot.index[annot.chromosome_name == "X"])
 
 adata.obs['percent_chrY'] = np.sum(
-    adata[:, chrY_genes].X, axis=1).A1 / np.sum(adata.X, axis=1).A1 * 100
+    adata[:, chrY_genes.difference(chrX_genes)].X, axis=1).A1 / np.sum(adata.X, axis=1).A1 * 100
 ```
 
 {{< meta qc_sex_4 >}}
