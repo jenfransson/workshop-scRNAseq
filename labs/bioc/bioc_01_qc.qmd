@@ -342,7 +342,10 @@ genes.table <- genes.table[genes.table$external_gene_name %in% rownames(sce.filt
 
 ```{r}
 chrY.gene <- genes.table$external_gene_name[genes.table$chromosome_name == "Y"]
-sce.filt@colData$pct_chrY <- Matrix::colSums(counts(sce.filt)[chrY.gene, ]) / colSums(counts(sce.filt))
+chrX.gene <- genes.table$external_gene_name[genes.table$chromosome_name == "X"]
+
+sce.filt@colData$pct_chrY <- Matrix::colSums(counts(sce.filt)[chrY.gene[!(chrY.gene %in% chrX.gene)], ]) /
+  colSums(counts(sce.filt))
 ```
 
 {{< meta qc_sex_4 >}}
